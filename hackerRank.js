@@ -21,7 +21,7 @@ browserOpenPromise
     return visitingLoginPage;
 })
 .then(function(){
-console.log("login page is opened !");
+// console.log("login page is opened !");
 let emailTypePromise=cTab.type("input[name='username']",email);
 return emailTypePromise;
 })
