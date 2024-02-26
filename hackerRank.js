@@ -7,6 +7,7 @@ let browserOpenPromise=puppeteer.launch({
     defaultViewport:null,
     args:["--start-maximized"],
     executablePath:"C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+    // C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe
 });
 browserOpenPromise
 .then(function(browser){
