@@ -36,7 +36,7 @@ return emailTypePromise;
     return loginPromise;
 })
 .then(function(){
-    let algotaqbopenpromise=cTab.waitAndClick("div[data-automation='algorithms']");
+    let algotaqbopenpromise=waitAndClick("div[data-automation='algorithms']");
     return algotaqbopenpromise;
 })
 .then(function(){
@@ -49,6 +49,18 @@ return emailTypePromise;
 
 function waitAndClick(selector){
     let myPromise=new Promise(function(resolve,reject){
- 
+        let waitForSlectorPromise=cTab.waitForSelector(selector);
+        waitForSlectorPromise
+        .then(function(){
+            let clickPromise=cTab.click(selector);
+            return clickPromise;
+        })
+        .then(function(){
+            resolve();
+        })
+        .catch(function(err){
+            console.log(err);
+        })
 });
+return myPromise;
 }
