@@ -35,7 +35,20 @@ return emailTypePromise;
     let loginPromise=cTab.click(".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled");
     return loginPromise;
 })
-.then(function(){})
+.then(function(){
+    let algotaqbopenpromise=cTab.waitAndClick("div[data-automation='algorithms']");
+    return algotaqbopenpromise;
+})
+.then(function(){
+    console.log("algorithms page is opened !");
+})
 .catch(function(err){
     console.log(err);
 });
+
+
+function waitAndClick(selector){
+    let myPromise=new Promise(function(resolve,reject){
+ 
+});
+}
