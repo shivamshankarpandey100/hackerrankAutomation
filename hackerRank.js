@@ -47,7 +47,7 @@ return emailTypePromise;
     console.log(err);
 });
 
-
+// It is use for the wait and click function because it is use for the wait and click the element
 function waitAndClick(selector){
     let myPromise=new Promise(function(resolve,reject){
         let waitForSlectorPromise=cTab.waitForSelector(selector);
@@ -57,7 +57,15 @@ function waitAndClick(selector){
             return clickPromise;
         })
         .then(function(){
-            resolve();
+            // resolve();
+            let allquestionPromise=cTab.waitForSelector('a[data-analytics="ChallangeListChallengeName"]');
+            return allquestionPromise;
+        })
+        .then(function(){
+            function getAllQuesLink(){
+                let allElement=document.querySelectorAll('a[data-analytics="ChallangeListChallengeName"]');
+            }
+            // .eveluate
         })
         .catch(function(err){
             console.log(err);
@@ -65,3 +73,6 @@ function waitAndClick(selector){
 });
 return myPromise;
 }
+
+
+
