@@ -11,37 +11,59 @@ let browserOpenPromise=puppeteer.launch({
 });
 browserOpenPromise
 .then(function(browser){
-    // console.log("browser is opened !");
+    console.log("browser is opened !");
     let allTabsPromise = browser.pages();
     return allTabsPromise;
 })
 .then(function(allTabs){
      cTab=allTabs[0];
-    // console.log("new tab is opened !");
+    console.log("new tab is opened !");
     let visitingLoginPage=cTab.goto("https://www.hackerrank.com/auth/login");
     return visitingLoginPage;
 })
 .then(function(){
-// console.log("login page is opened !");
+console.log("login page is opened !");
 let emailTypePromise=cTab.type("input[name='username']",email);
 return emailTypePromise;
 })
 .then(function(){
-    // console.log("email is typed !");
+    console.log("email is typed !");
     let pwdTypePromise=cTab.type("input[name='password']",password);
     return pwdTypePromise;
 })
 .then(function(){
-    // console.log("password is typed !");
+    console.log("password is typed !");
     let loginPromise=cTab.click(".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled");
     return loginPromise;
 })
 .then(function(){
+    console.log("logged into hackerrank successfully");
     let algotaqbopenpromise=waitAndClick("div[data-automation='algorithms']");
     return algotaqbopenpromise;
 })
 .then(function(){
     console.log("algorithms page is opened !");
+    let allquestionPromise=cTab.waitForSelector('a[data-analytics="ChallengeListChallengeName"]');
+    return allquestionPromise;
+})
+.then(function(){
+    function getAllQuesLink(){
+        let allElementArr=document.querySelectorAll('a[data-analytics="ChallengeListChallengeName"]');
+        let linkArr=[];
+        for(let i=0;i<allElementArr.length;i++){
+            linkArr.push(allElementArr[i].getAttribute("href"));
+        }
+        return linkArr;
+    }
+
+    let linksArrPromise=cTab.evaluate(getAllQuesLink);
+    return linksArrPromise;
+    // .eveluate
+})
+.then(function(linksArr){
+    //Solve the Questions
+    console.log(linksArr);
+    
 })
 .catch(function(err){
     console.log(err);
@@ -53,20 +75,16 @@ function waitAndClick(selector){
         let waitForSlectorPromise=cTab.waitForSelector(selector);
         waitForSlectorPromise
         .then(function(){
+            console.log("algo btn is found");
             let clickPromise=cTab.click(selector);
             return clickPromise;
         })
         .then(function(){
-            // resolve();
-            let allquestionPromise=cTab.waitForSelector('a[data-analytics="ChallangeListChallengeName"]');
-            return allquestionPromise;
+            console.log("algo btn is clicked");
+             resolve();
+           
         })
-        .then(function(){
-            function getAllQuesLink(){
-                let allElement=document.querySelectorAll('a[data-analytics="ChallangeListChallengeName"]');
-            }
-            // .eveluate
-        })
+
         .catch(function(err){
             console.log(err);
         })
