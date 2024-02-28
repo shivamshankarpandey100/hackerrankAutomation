@@ -62,8 +62,13 @@ return emailTypePromise;
 })
 .then(function(linksArr){
     //Solve the Questions
-    console.log(linksArr);
+    // console.log(linksArr);
+    let questionWillBeSolvedPromise=questionSolver(linksArr[0],0);
+    return questionWillBeSolvedPromise;
     
+})
+.then(function(){
+    console.log("question is solved !");
 })
 .catch(function(err){
     console.log(err);
@@ -90,6 +95,23 @@ function waitAndClick(selector){
         })
 });
 return myPromise;
+}
+
+function questionSolver(url,idx){
+
+    return new Promise(function(resolve, reject){
+        let fullLink=`https://www.hackerrank.com${url}`;
+    let goToQuestionPagePromise=cTab.goto(fullLink);
+    goToQuestionPagePromise
+    .then(function(){
+        console.log("question page is opened !");
+        resolve();
+    })
+    .catch(function(err){
+        reject(err);
+    })
+    });
+    
 }
 
 
