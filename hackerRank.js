@@ -2,6 +2,7 @@ const puppeteer=require("puppeteer");
 let email="shivasinghrajput07@gmail.com";
 let password="Shivam@123";
 let cTab;
+let {answers}=require("./code");
 let browserOpenPromise=puppeteer.launch({
     headless:false,
     defaultViewport:null,
@@ -105,7 +106,16 @@ function questionSolver(url,idx){
     goToQuestionPagePromise
     .then(function(){
         console.log("question page is opened !");
-        resolve();
+        let waitForCheckboxAndClickPromise=waitAndClick("checkbox-input");
+        return  waitForCheckboxAndClickPromise;
+    })
+    .then(function(){
+        console.log("checkbox is clicked !");
+        let waitForTextBoxPromise=cTab.waitForSelector(".custominput");
+        return waitForTextBoxPromise;
+    })
+    .then(function(){
+    let codeWillbeTypedPromise=cTab.type(".custominput",);
     })
     .catch(function(err){
         reject(err);
