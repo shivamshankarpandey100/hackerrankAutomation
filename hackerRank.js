@@ -151,7 +151,7 @@ function questionSolver(url,idx){
     })
     .then(function () {
         //control key is pressed promise
-        let controlePressedPromise = curTab.keyboard.down("Control");
+        let controlePressedPromise = cTab.keyboard.down("Control");
         return controlePressedPromise;
       })
     .then(function(){
@@ -165,7 +165,7 @@ function questionSolver(url,idx){
         return vKeypressPromise;
     })
     .then(function () {
-        let controleDownPromise = curTab.keyboard.up("Control");
+        let controleDownPromise = cTab.keyboard.up("Control");
         return controleDownPromise;
       })
     .then(function(){
