@@ -24,12 +24,12 @@ browserOpenPromise
 })
 .then(function(){
 console.log("login page is opened !");
-let emailTypePromise=cTab.type("input[name='username']",email,{delay:500});
+let emailTypePromise=cTab.type("input[name='username']",email,{delay:300});
 return emailTypePromise;
 })
 .then(function(){
     console.log("email is typed !");
-    let pwdTypePromise=cTab.type("input[name='password']",password,{delay:500});
+    let pwdTypePromise=cTab.type("input[name='password']",password,{delay:300});
     return pwdTypePromise;
 })
 .then(function(){
