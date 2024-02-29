@@ -6,14 +6,14 @@ let {answer}=require("./code");
 let browserOpenPromise=puppeteer.launch({
     headless:false,
     defaultViewport:null,
-    args:["--start-maximized"],
+    args:["--start-maximized","--start-in-incognito"],
     executablePath:"C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
     // C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe
 });
 browserOpenPromise
 .then(function(browser){
     console.log("browser is opened !");
-    let allTabsPromise = browser.pages();
+    let allTabsPromise = browser.pages();//browser.newPage();-> it is use for the open the new tab
     return allTabsPromise;
 })
 .then(function(allTabs){
@@ -24,12 +24,12 @@ browserOpenPromise
 })
 .then(function(){
 console.log("login page is opened !");
-let emailTypePromise=cTab.type("input[name='username']",email);
+let emailTypePromise=cTab.type("input[name='username']",email,{delay:500});
 return emailTypePromise;
 })
 .then(function(){
     console.log("email is typed !");
-    let pwdTypePromise=cTab.type("input[name='password']",password);
+    let pwdTypePromise=cTab.type("input[name='password']",password,{delay:500});
     return pwdTypePromise;
 })
 .then(function(){
@@ -65,6 +65,13 @@ return emailTypePromise;
     //Solve the Questions
     // console.log(linksArr);
     let questionWillBeSolvedPromise=questionSolver(linksArr[0],0);
+    for (let i = 1; i < linksArr.length; i++){
+        questionWillBeSolvedPromise = questionWillBeSolvedPromise.then(function () {
+          return questionSolver(linksArr[i], i);
+        })
+        // a = 10;
+        // a = a + 1;
+      }
     return questionWillBeSolvedPromise;
     
 })
@@ -120,7 +127,7 @@ function questionSolver(url,idx){
     })
     .then(function(){
         //control key is presed
-        let controlPressedPromise=cTab.keyboard.press("Control");
+        let controlPressedPromise=cTab.keyboard.down("Control");
         return controlPressedPromise;
     })
     .then(function(){
@@ -134,20 +141,33 @@ function questionSolver(url,idx){
         return xKeypressPromise;
     })
     .then(function(){
+        let controlrelesePromise=cTab.keyboard.up("Control");
+        return controlrelesePromise;
+    })
+    .then(function(){
         
         let cursorOnEditorPromise=cTab.click(".monaco-editor.no-user-select.vs");
         return cursorOnEditorPromise;
     })
+    .then(function () {
+        //control key is pressed promise
+        let controlePressedPromise = curTab.keyboard.down("Control");
+        return controlePressedPromise;
+      })
     .then(function(){
           // a press
-          let aKeypressPromise=cTab.keyboard.press("a");
+          let aKeypressPromise=cTab.keyboard.press("A",{delay:100});
           return aKeypressPromise;
     })
     .then(function(){
         //v Pressed
-        let vKeypressPromise=cTab.keyboard.press("v");
+        let vKeypressPromise=cTab.keyboard.press("V",{delay:100});
         return vKeypressPromise;
     })
+    .then(function () {
+        let controleDownPromise = curTab.keyboard.up("Control");
+        return controleDownPromise;
+      })
     .then(function(){
         //submit button clicked
         let clickSubmitButtonPromise=cTab.click(".hr-monaco-submit");
