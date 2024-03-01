@@ -122,7 +122,7 @@ function questionSolver(url,idx){
         return waitForTextBoxPromise;
     })
     .then(function(){
-    let codeWillbeTypedPromise=cTab.type(".custominput",answer[idx]);
+    let codeWillbeTypedPromise=cTab.type(".custominput",answer[idx],{delay:50});
     return codeWillbeTypedPromise;
     })
     .then(function(){
